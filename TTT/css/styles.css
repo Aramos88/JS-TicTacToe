@@ -1,0 +1,107 @@
+﻿body {
+    font-family: Mathematica1;
+}
+span{
+    position:absolute;
+    top:0px;
+    left:0px;
+    display:block;
+    vertical-align:top;
+    text-wrap:normal;
+}
+
+.GameLog {
+    align-content:flex-start;
+    width: 155px;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    bottom: 5px;
+    background: #FFE066;
+    border: 2px solid black;
+    border-radius: 2px;
+    text-align:left;
+    font-size: 10px;
+    font-weight: bold;
+    text-wrap:avoid;
+}
+
+    .GameLog:disabled {
+        background-color: grey;
+    }
+
+.MenuButtons {
+    width: 260px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    padding: 5px;
+}
+
+.Button {
+    background: #EB7D33;
+    width: 119px;
+    height: 77px;
+    border: 2px solid black;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 2px;
+}
+
+    .Button:disabled {
+        background-color: grey;
+    }
+
+.Main {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -171px;
+    margin-top: -171px;
+    width: 415px;
+    height: 335px;
+    border: 3px solid black;
+}
+
+.GameField {
+    background: #EB7D33;
+    width: 240px;
+    border: 2px solid black;
+    position: absolute;
+    left: 5px;
+    bottom: 5px;
+    border-radius: 2px;
+}
+
+.GameTile {
+    background: #FFFFD1;
+    height: 80px;
+    width: 80px;
+    border: 2px groove grey;
+    float: left;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    font-size: 32px;
+    text-align: center;
+    line-height: 80px;
+    color: black;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -user-select: none;
+    margin: 0px 0px 0px 0px;
+    cursor: pointer;
+    color: black;
+}
+
+    .GameTile:disabled {
+        background-color: grey;
+    }
+
+.GameField:after {
+    display: block;
+    clear: both;
+    content: "";
+}
