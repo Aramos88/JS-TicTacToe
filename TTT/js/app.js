@@ -23,20 +23,20 @@
     function ResetUI() {
         $(".GameTile").empty();
         if (Math.round(Math.random()) == 0) {
-            $("#log_text").text("The field has been reset for a new game. AI goes first.\n");
+            $("#game_log").html("The field has been reset for a new game. AI goes first.<br />");
             AI_plays();
         }
         else {
-            $("#log_text").text("The field has been reset for a new game. Player goes first.\n");
+            $("#game_log").html("The field has been reset for a new game. Player goes first.<br />");
         }
     }
 
     function Player_plays() {
         if (this.textContent === "") {
             this.textContent = "X";
-            $("#log_text").text($("#log_text").text() + "Player marks the tile № " + this.id + '\n');
+            $("#game_log").html($("#game_log").html() + "Player marks the tile № " + this.id + "<br />");
             if (CheckForVictory()) {
-                $("#log_text").text($("#log_text").text() + "Player wins the game!" + '\n');
+                $("#game_log").html($("#game_log").html() + "Player wins the game!" + '<br />');
                 alert("You have won!");
                 ResetUI();
             }
@@ -51,11 +51,11 @@
             if ($("#" + rnd).text() == "") {
                 $("#" + rnd).text("O");
                 marked = true;
-                $("#log_text").text($("#log_text").text() + "AI marks the tile № " + rnd + '\n');
+                $("#game_log").html($("#game_log").html() + "AI marks the tile № " + rnd + '<br />');
             }
         }
         if (CheckForVictory()) {
-            $("#log_text").text($("#log_text").text() + "AI wins the game!" + '\n');
+            $("#game_log").html($("#game_log").html() + "AI wins the game!" + '<br />');
             alert("AI has won!");
             ResetUI();
         }
