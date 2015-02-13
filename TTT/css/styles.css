@@ -11,7 +11,7 @@ span{
 }
 
 .GameLog {
-    align-content:flex-start;
+    padding-bottom:80%;
     width: 155px;
     position: absolute;
     top: 5px;
