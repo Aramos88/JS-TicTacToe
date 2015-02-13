@@ -1,84 +1,115 @@
 ﻿$(document).ready(function () {
 
-    $("#reset_btn").attr("disabled", "disabled");
-    $(".GameTile").attr("disabled", "disabled");
-    $("#game_log").attr("disabled", "disabled");
+    DisableUI();
+    var GameTileAmount = $(".GameTile").size();
 
-    var game = new Array(9);
+    //I have isolated both logics to their respective functions but I still don't quite follow why, since these controls are only supposed to be disabled and enabled a single time, on startup;
 
-    $("#initialize_btn").click(function () {
+
+    $("#initialize_btn").click(EnableUI);
+    $("#reset_btn").click(ResetUI);
+    $("#game_field").on("click", ".GameTile", Player_plays);
+
+    function EnableUI() {
         $("#reset_btn").removeAttr('disabled');
         $(".GameTile").removeAttr('disabled');
         $("#game_log").removeAttr('disabled');
-    });
-
-    $("#reset_btn").click(function () { Reset(); });
-    function Reset() {
+    }
+    function DisableUI() {
+        $("#reset_btn").attr("disabled", "disabled");
+        $(".GameTile").attr("disabled", "disabled");
+        $("#game_log").attr("disabled", "disabled");
+    }
+    function ResetUI() {
         $(".GameTile").empty();
         if (Math.round(Math.random()) == 0) {
-            $("#log_text").text("The field has been reset for a new game. Player goes first.\n");
-        }
-        else {
             $("#log_text").text("The field has been reset for a new game. AI goes first.\n");
             AI_plays();
         }
+        else {
+            $("#log_text").text("The field has been reset for a new game. Player goes first.\n");
+        }
     }
-    $("#game_field").on("click", ".GameTile", function () {
+
+    function Player_plays() {
         if (this.textContent === "") {
             this.textContent = "X";
-            $("#log_text").innerHtml
-            $("#log_text").text($("#log_text")[0].textContent  + "Player marks the tile № " + this.id + '\n');
+            $("#log_text").text($("#log_text").text() + "Player marks the tile № " + this.id + '\n');
             if (CheckForVictory()) {
-                $("#log_text").text($("#log_text")[0].textContent + "Player wins the game!" + '\n');
+                $("#log_text").text($("#log_text").text() + "Player wins the game!" + '\n');
                 alert("You have won!");
-                Reset();
+                ResetUI();
             }
-            AI_plays();
+            else
+                AI_plays();
         }
-    });
+    }
     function AI_plays() {
-        var marked = false
-        while (marked == false) {
-            var rnd = Math.floor((Math.random() * 9) + 1);
-            if (document.getElementById(rnd).textContent == "") {
-                document.getElementById(rnd).textContent = "O";
+        var marked = false;
+        while (!marked) {
+            var rnd = Math.floor((Math.random() * GameTileAmount) + 1); //Generating a random number between 1 and the amount of tiles on the field.
+            if ($("#" + rnd).text() == "") {
+                $("#" + rnd).text("O");
                 marked = true;
-                $("#log_text").text($("#log_text")[0].textContent  + "AI marks the tile № " + rnd + '\n');
+                $("#log_text").text($("#log_text").text() + "AI marks the tile № " + rnd + '\n');
             }
         }
         if (CheckForVictory()) {
-            $("#log_text").text($("#log_text")[0].textContent  + "AI wins the game!" + '\n');
+            $("#log_text").text($("#log_text").text() + "AI wins the game!" + '\n');
             alert("AI has won!");
-            Reset();
+            ResetUI();
         }
     }
     function CheckForVictory() {
-        var draw = 0;
-        for (i = 1; i < 10; i++) {
-            game[i] = document.getElementById(i).textContent;
-            if (document.getElementById(i).textContent == "") {
-                draw++;
+
+        var draw = 0;//"draw" is a counter representing the current number of vacant spaces on the gamefield, if the victory conditions aren't met by the time it reaches 1, a draw is called.
+        var size = Math.sqrt(GameTileAmount);
+        //Populating a 2D array representing the game field with its current state to simplify checking for victory conditions
+        var fieldModel = new Array(size);
+        for (i = 0; i < size; i++) {
+            fieldModel[i] = new Array(size);
+            for (j = 0; j < size; j++) {
+                fieldModel[i][j] = $("#" + (size * i + j + 1)).text();
+                if ($("#" + (size * i + j + 1)).text() == "") {
+                    draw++;
+                }
             }
         }
-        for (i = 1; i < 9; i += 3) {
-            if (game[i] != "" && game[i] == game[i + 1] && game[i + 1] == game[i + 2])
+
+        //The following loop will check the crossing row and column for each field size index value and both diagonals in the end, until the victory condition is satisfied.
+        var diag = "";
+        var xdiag = "";
+        for (i = 0; i < size; i++) {
+            var col = "";
+            var row = "";
+            for (j = 0; j < size; j++) {
+                col += fieldModel[j][i];
+                row += fieldModel[i][j];
+                if (i == j)
+                    diag += fieldModel[i][j];
+                if (i + j == size - 1)
+                    xdiag += fieldModel[i][j];
+            }
+            if (CheckTriplex(row)) {
                 return true;
-        }
-        for (i = 1; i < 4; i++) {
-            if (game[i] != "" && game[i] == game[i + 3] && game[i + 3] == game[i + 6])
+            }
+            if (CheckTriplex(col)) {
                 return true;
+            }
         }
-        if (game[1] != "" && game[1] == game[5] && game[5] == game[9])
+        if (CheckTriplex(diag))
             return true;
-        if (game[7] != "" && game[7] == game[5] && game[5] == game[3])
+        if (CheckTriplex(xdiag))
             return true;
-        if (draw == 1 || draw == 0) {
+
+        if (draw == 0) {
             alert("It's a draw!");
-            Reset();
+            ResetUI();
             return false;
         }
-
         return false;
     }
-
+    function CheckTriplex(str) {
+        return (str == "XXX" || str == "OOO");
+    }
 });
