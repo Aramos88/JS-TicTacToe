@@ -9,9 +9,19 @@ span{
     vertical-align:top;
     text-wrap:normal;
 }
-
+.GameOver{
+    position:absolute;
+    top:35%;
+    left:30%;
+    width:160px;
+    height:80px;
+    background: #FFE066;
+    border: 2px solid black;
+    font-size: 20px;
+    font-weight: bold;
+}
 .GameLog {
-    padding-bottom:80%;
+    padding-bottom:70%;
     width: 155px;
     position: absolute;
     top: 5px;
@@ -26,21 +36,20 @@ span{
     text-wrap:avoid;
 }
 
-    .GameLog:disabled {
-        background-color: grey;
-    }
-
 .MenuButtons {
     width: 260px;
     position: absolute;
     top: 0px;
     left: 0px;
     padding: 5px;
+    align-items:center;
+    display:flexbox;
 }
 
 .Button {
+    align-self:center;
     background: #EB7D33;
-    width: 119px;
+    width: 243px;
     height: 77px;
     border: 2px solid black;
     font-size: 20px;
@@ -48,10 +57,6 @@ span{
     text-align: center;
     border-radius: 2px;
 }
-
-    .Button:disabled {
-        background-color: grey;
-    }
 
 .Main {
     position: absolute;
@@ -95,10 +100,9 @@ span{
     cursor: pointer;
     color: black;
 }
-
-    .GameTile:disabled {
-        background-color: grey;
-    }
+.GameTile:disabled{
+    color:grey;
+}
 
 .GameField:after {
     display: block;
