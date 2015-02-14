@@ -51,7 +51,8 @@ TTT_ns.Player_plays = function () {
 }
 TTT_ns.AI_plays = function () {
     var marked = false;
-    while (!marked) {
+    var count = $(".GameTile").filter(function () { if ($(this).text() == "") return this; }).length;//Counts the empty tiles
+    while (!marked && count != 0) {
         var rnd = Math.floor((Math.random() * TTT_ns.GameTileAmount) + 1); //Generating a random number between 1 and the amount of tiles on the field.
         if ($("#" + rnd).text() == "") {
             $("#" + rnd).text("O");
@@ -67,7 +68,6 @@ TTT_ns.AI_plays = function () {
     }
 }
 TTT_ns.CheckForVictory = function () {
-
     var draw = 0;//"draw" is a counter representing the current number of vacant spaces on the gamefield, if the victory conditions aren't met by the time it reaches 1, a draw is called.
     var size = Math.sqrt(TTT_ns.GameTileAmount);
     //Populating a 2D array representing the game field with its current state to simplify checking for victory conditions
@@ -129,3 +129,4 @@ $(document).ready(function () {
     $("#gameover_popup").click(TTT_ns.ResetUI);
 
 });
+
