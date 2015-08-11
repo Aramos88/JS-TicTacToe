@@ -61,6 +61,7 @@
     <Content Include="js\app.js" />
     <Content Include="js\jquery-1.11.0.min.js" />
     <Content Include="main.html" />
+    <Content Include="TextFile1.txt" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
